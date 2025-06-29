@@ -7,6 +7,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -32,4 +37,19 @@ public class User extends Base{
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserStatus active;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Address> addresses = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "user_role"
+                , joinColumns = @JoinColumn(name="user_id")
+                , inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> role= new HashSet<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,  orphanRemoval = true)
+    private List<Rating> ratings = new ArrayList<>();
+    @ManyToMany
+    @JoinTable( name = "coupon_user",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "coupon_id"))
+    private Set<Coupon> coupons = new HashSet<>();
 }
