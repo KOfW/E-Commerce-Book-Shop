@@ -1,4 +1,9 @@
 package ecommerce.backend.bookstore.utils;
 
-public class PaymentStatus {
+public enum PaymentStatus {
+    UNPAID,
+    PENDING,
+    PAID,
+    FAILED,
+
 }

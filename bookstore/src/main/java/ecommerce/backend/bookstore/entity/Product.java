@@ -32,16 +32,26 @@ public class Product extends Base{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
     private Author author;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "discount_id")
     private Discount discount;
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductImage> productImages = new ArrayList<>();
+
     @OneToOne(mappedBy = "product")
     private Inventory inventory;
+
+    @OneToOne(mappedBy = "product")
+    private CartItem cartItem;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private List<Review> reviews;
 
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;

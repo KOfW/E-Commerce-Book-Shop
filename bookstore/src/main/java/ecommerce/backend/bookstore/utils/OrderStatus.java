@@ -1,4 +1,8 @@
 package ecommerce.backend.bookstore.utils;
 
-public class OrderStatus {
+public enum OrderStatus {
+    PENDING,
+    CONFIRMED,
+    DELIVERED,
+    CANCELLED
 }

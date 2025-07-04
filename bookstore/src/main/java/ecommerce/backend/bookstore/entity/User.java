@@ -40,16 +40,32 @@ public class User extends Base{
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses = new ArrayList<>();
+
     @ManyToMany
     @JoinTable(name = "user_role"
                 , joinColumns = @JoinColumn(name="user_id")
                 , inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> role= new HashSet<>();
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,  orphanRemoval = true)
     private List<Rating> ratings = new ArrayList<>();
+
     @ManyToMany
     @JoinTable( name = "coupon_user",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "coupon_id"))
     private Set<Coupon> coupons = new HashSet<>();
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private CartSession cartSession;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Order> orders = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Payment> payments = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Review> reviews;
+
 }

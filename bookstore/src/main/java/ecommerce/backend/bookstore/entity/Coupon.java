@@ -28,4 +28,11 @@ public class Coupon extends Base{
 
     @ManyToMany(mappedBy = "coupon")
     private Set<User> users = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cart_session_id")
+    private CartSession cartSession;
+
+    @OneToOne(mappedBy = "coupon")
+    private CouponUsage couponUsage;
 }
