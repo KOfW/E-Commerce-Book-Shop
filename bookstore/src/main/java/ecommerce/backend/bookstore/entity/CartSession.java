@@ -26,9 +26,9 @@ public class CartSession {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @OneToMany(mappedBy = "cart_session", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "cartSession", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Coupon> coupons = new ArrayList<>();
 
-    @OneToMany(mappedBy = "cart_session", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "cartSession", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> cartItems = new ArrayList<>();
 }

@@ -16,16 +16,22 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "product")
-public class Product extends Base{
+public class Product extends Base {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
+    @Column(name = "description")
     private String desc;
+
     private Double price;
     private Integer quantity_sold;
+
     @Enumerated(EnumType.STRING)
     private ProductQuantityStatus status;
+
     private String publisher;
     private Boolean hiddenProduct;
 
@@ -44,20 +50,12 @@ public class Product extends Base{
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductImage> productImages = new ArrayList<>();
 
-    @OneToOne(mappedBy = "product")
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private Inventory inventory;
 
-    @OneToOne(mappedBy = "product")
-    private CartItem cartItem;
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private List<CartItem> cartItems = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-    private List<Review> reviews;
-
-    public void setInventory(Inventory inventory) {
-        this.inventory = inventory;
-        if (inventory != null) {
-            inventory.setProduct(this);
-        }
-    }
-
+    private List<Review> reviews = new ArrayList<>();
 }

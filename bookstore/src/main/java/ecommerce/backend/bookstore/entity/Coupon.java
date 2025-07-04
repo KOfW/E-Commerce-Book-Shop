@@ -26,7 +26,7 @@ public class Coupon extends Base{
     private Date startDate;
     private Date endDate;
 
-    @ManyToMany(mappedBy = "coupon")
+    @ManyToMany(mappedBy = "coupons")
     private Set<User> users = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)

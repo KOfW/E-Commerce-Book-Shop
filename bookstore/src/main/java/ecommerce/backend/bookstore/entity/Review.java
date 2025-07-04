@@ -16,14 +16,13 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String isVerified; // có sửa đổi comment chưa (edited)
+
+    private Boolean isVerified;
     private String content;
-    @Column(name = "parent_id")
-    private Long parentId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id", insertable = false, updatable = false)
-    private Category parent;
+    @JoinColumn(name = "parent_id")
+    private Review parent;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

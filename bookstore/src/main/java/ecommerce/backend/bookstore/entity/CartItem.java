@@ -23,7 +23,7 @@ public class CartItem {
     @JoinColumn(name = "cart_session_id")
     private CartSession cartSession;
 
-    @OneToOne
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
     private Product product;
 }
