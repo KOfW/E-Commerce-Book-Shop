@@ -19,7 +19,6 @@ public class CartSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String isActive;
     private Double total;
 
     @OneToOne

@@ -30,6 +30,5 @@ public class ProductResponse {
     private Long category;
     private Long author;
     private Long discount;
-
     private String status;
 }
