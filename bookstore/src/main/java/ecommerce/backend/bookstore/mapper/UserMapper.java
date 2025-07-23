@@ -1,2 +1,4 @@
-package ecommerce.backend.bookstore.mapper;public class UserMapper {
+package ecommerce.backend.bookstore.mapper;
+
+public class UserMapper {
 }

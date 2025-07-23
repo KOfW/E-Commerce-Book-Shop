@@ -20,6 +20,4 @@ public class CategoryRequest {
     private Long parentId;
     @NotBlank
     private String name;
-    @NotBlank
-    private Category parent;
 }

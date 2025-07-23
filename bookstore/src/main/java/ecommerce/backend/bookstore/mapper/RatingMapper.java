@@ -1,2 +1,4 @@
-package ecommerce.backend.bookstore.mapper;public class RatingMapper {
+package ecommerce.backend.bookstore.mapper;
+
+public class RatingMapper {
 }

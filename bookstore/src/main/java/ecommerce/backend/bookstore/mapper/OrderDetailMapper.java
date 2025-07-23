@@ -1,2 +1,41 @@
-package ecommerce.backend.bookstore.mapper;public class OrderDetailMapper {
+package ecommerce.backend.bookstore.mapper;
+
+import ecommerce.backend.bookstore.dto.request.OrderDetailRequest;
+import ecommerce.backend.bookstore.dto.response.OrderDetailResponse;
+import ecommerce.backend.bookstore.entity.OrderDetail;
+import ecommerce.backend.bookstore.repository.OrderRepo;
+import ecommerce.backend.bookstore.repository.ProductRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class OrderDetailMapper {
+
+    @Autowired
+    private OrderRepo orderRepo;
+    @Autowired
+    private ProductRepo productRepo;
+
+    public OrderDetail toEntity (OrderDetailRequest request){
+        OrderDetail orderDetail = OrderDetail.builder()
+                .amount(request.getAmount())
+                .total(request.getTotal())
+                .order(orderRepo.getById(request.getOrderId()))
+                .product(productRepo.getById(request.getProductId()))
+                .build();
+
+        return orderDetail;
+    }
+
+    public OrderDetailResponse toDTO (OrderDetail orderDetail){
+        OrderDetailResponse orderDetailResponse = OrderDetailResponse.builder()
+                .id(orderDetail.getId())
+                .amount(orderDetail.getAmount())
+                .total(orderDetail.getTotal())
+                .orderId(orderDetail.getOrder().getId())
+                .productId(orderDetail.getProduct().getId())
+                .build();
+
+        return orderDetailResponse;
+    }
 }

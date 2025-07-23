@@ -1,2 +1,4 @@
-package ecommerce.backend.bookstore.mapper;public class PaymentMethodMapper {
+package ecommerce.backend.bookstore.mapper;
+
+public class PaymentMethodMapper {
 }

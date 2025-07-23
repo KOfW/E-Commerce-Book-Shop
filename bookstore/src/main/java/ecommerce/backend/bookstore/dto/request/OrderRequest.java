@@ -16,7 +16,6 @@ import java.util.Date;
 @NoArgsConstructor
 public class OrderRequest {
     private Double total;
-    private String status;
     private Date orderDate;
     private Long userId;
     private Long shippingAddressId;
