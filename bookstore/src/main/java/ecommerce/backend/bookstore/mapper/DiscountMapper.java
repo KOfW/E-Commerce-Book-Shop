@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class DiscountMapper {
 
-    public Discount toDTO(DiscountRequest request){
+    public Discount toEntity(DiscountRequest request){
         Discount discount = Discount.builder()
                 .discountPercent(request.getDiscountPercent())
                 .startDate(request.getStartDate())
@@ -18,7 +18,7 @@ public class DiscountMapper {
         return discount;
     }
 
-    public DiscountResponse toEntity(Discount discount){
+    public DiscountResponse toDTO(Discount discount){
         DiscountResponse discountResponse = DiscountResponse.builder()
                 .id(discount.getId())
                 .discountPercent(discount.getDiscountPercent())

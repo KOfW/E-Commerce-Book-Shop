@@ -25,5 +25,5 @@ public class UserRequest {
     private String firstName;
     private String lastName;
     private String urlImage;
-    private String active;
+    private UserStatus active;
 }

@@ -23,13 +23,12 @@ public class CouponUsageMapper {
         return couponUsage;
     }
 
-    public CouponUsageResponse toEntity (CouponUsage couponUsage){
-        CouponUsageResponse response = CouponUsageResponse.builder()
-                .id(couponUsage.getId())
-                .usageAmount(couponUsage.getUsageAmount())
-                .couponId(couponUsage.getCoupon().getId())
+    public CouponUsageResponse toDTO (CouponUsageRequest request){
+        CouponUsageResponse couponUsageResponse = CouponUsageResponse.builder()
+                .usageAmount(request.getUsageAmount())
+                .couponId(request.getCouponId())
                 .build();
 
-        return response;
+        return couponUsageResponse;
     }
 }

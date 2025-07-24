@@ -1,9 +1,7 @@
 package ecommerce.backend.bookstore.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import ecommerce.backend.bookstore.utils.PaymentStatus;
+import lombok.*;
 
 import java.util.Date;
 
@@ -11,10 +9,11 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class PaymentResponse {
     private Long id;
     private Double total;
-    private String status;
+    private PaymentStatus status;
     private Date paymentDate;
     private Long paymentMethodId;
     private Long userId;

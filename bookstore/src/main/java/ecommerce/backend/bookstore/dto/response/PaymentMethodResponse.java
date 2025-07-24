@@ -1,15 +1,13 @@
 package ecommerce.backend.bookstore.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PaymentMethodResonse {
+@Builder
+public class PaymentMethodResponse {
     private Long id;
     private String methodCode;
     private String methodName;

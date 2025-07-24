@@ -21,7 +21,7 @@ public class CartSessionMapper {
         return cartSession;
     }
 
-    public CartSessionResponse toEntity (CartSession cartSession){
+    public CartSessionResponse toDTO (CartSession cartSession){
         CartSessionResponse response = CartSessionResponse.builder()
                 .id(cartSession.getId())
                 .total(cartSession.getTotal())

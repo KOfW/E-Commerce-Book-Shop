@@ -18,7 +18,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class PaymentRequest {
     private Double total;
-    private String status;
+    private PaymentStatus status;
     private Date paymentDate;
     private Long paymentMethodId;
     private Long userId;

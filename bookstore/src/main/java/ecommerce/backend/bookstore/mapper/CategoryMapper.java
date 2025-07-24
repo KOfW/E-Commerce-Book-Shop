@@ -14,7 +14,7 @@ public class CategoryMapper {
         return category;
     }
 
-    public CategoryResponse toEntity (Category category){
+    public CategoryResponse toDTO (Category category){
         CategoryResponse response = CategoryResponse.builder()
                 .id(category.getId())
                 .name(category.getName())

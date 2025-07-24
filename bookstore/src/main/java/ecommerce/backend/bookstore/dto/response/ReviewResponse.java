@@ -1,15 +1,13 @@
 package ecommerce.backend.bookstore.dto.response;
 
 import ecommerce.backend.bookstore.entity.Review;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ReviewResponse {
     private Long id;
     private Boolean isVerified;

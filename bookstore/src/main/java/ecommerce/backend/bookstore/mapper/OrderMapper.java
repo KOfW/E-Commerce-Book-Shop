@@ -30,7 +30,7 @@ public class OrderMapper {
         return order;
     }
 
-    public OrderResponse toEntity (Order order){
+    public OrderResponse toDTO (Order order){
         OrderResponse orderResponse = OrderResponse.builder()
                 .id(order.getId())
                 .total(order.getTotal())
@@ -42,4 +42,4 @@ public class OrderMapper {
 
         return orderResponse;
     }
-}
+ }
