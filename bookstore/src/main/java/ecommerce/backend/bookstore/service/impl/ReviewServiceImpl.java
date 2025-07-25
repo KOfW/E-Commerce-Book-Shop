@@ -1,4 +1,7 @@
 package ecommerce.backend.bookstore.service.impl;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class ReviewServiceImpl {
 }
