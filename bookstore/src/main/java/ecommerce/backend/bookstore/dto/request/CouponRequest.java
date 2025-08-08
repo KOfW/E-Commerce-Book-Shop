@@ -17,4 +17,5 @@ public class CouponRequest {
     private Integer max_usage;
     private Date startDate;
     private Date endDate;
+    private Long cartSessionId;
 }

@@ -5,12 +5,15 @@ import ecommerce.backend.bookstore.dto.response.CouponResponse;
 import ecommerce.backend.bookstore.entity.CartSession;
 import ecommerce.backend.bookstore.entity.Coupon;
 import ecommerce.backend.bookstore.repository.CartSessionRepo;
+import ecommerce.backend.bookstore.repository.CouponRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CouponMapper {
 
+    @Autowired
+    private CouponRepo couponRepo;
     @Autowired
     private CartSessionRepo cartSessionRepo;
 
@@ -48,5 +51,33 @@ public class CouponMapper {
                 .build();
 
         return response;
+    }
+
+    public CouponResponse toUpdate(Coupon entity, CouponRequest request) {
+        if (entity == null) throw new RuntimeException("Entity Coupon is null");
+
+        // Update the entity with request values
+        entity.setCode(request.getCode());
+        entity.setDiscountPercent(request.getDiscountPercent());
+        entity.setMax_usage(request.getMax_usage());
+        entity.setStartDate(request.getStartDate());
+        entity.setEndDate(request.getEndDate());
+        entity.setCartSession(cartSessionRepo.findById(request.getCartSessionId()).orElseThrow(() -> new RuntimeException("not found cart session")));
+
+        // Save entity
+        couponRepo.save(entity);
+
+        // Now use the updated entity to build the response
+        CouponResponse couponResponseUpdate = CouponResponse.builder()
+                .id(entity.getId())
+                .code(entity.getCode())
+                .discountPercent(entity.getDiscountPercent())
+                .max_usage(entity.getMax_usage())
+                .startDate(entity.getStartDate())
+                .endDate(entity.getEndDate())
+                .cartSessionId(entity.getCartSession().getId())
+                .build();
+
+        return couponResponseUpdate;
     }
 }

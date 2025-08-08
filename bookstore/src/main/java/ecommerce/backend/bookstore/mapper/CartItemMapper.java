@@ -3,6 +3,7 @@ package ecommerce.backend.bookstore.mapper;
 import ecommerce.backend.bookstore.dto.request.CartItemRequest;
 import ecommerce.backend.bookstore.dto.response.CartItemResponse;
 import ecommerce.backend.bookstore.entity.CartItem;
+import ecommerce.backend.bookstore.repository.CartItemRepo;
 import ecommerce.backend.bookstore.repository.CartSessionRepo;
 import ecommerce.backend.bookstore.repository.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 public class CartItemMapper {
 
     @Autowired
+    private CartItemRepo cartItemRepo;
+    @Autowired
     private CartSessionRepo cartSessionRepo;
     @Autowired
     private ProductRepo productRepo;
@@ -20,8 +23,8 @@ public class CartItemMapper {
         CartItem cartItem = CartItem.builder()
                 .amount(request.getAmount())
                 .total(request.getTotal())
-                .cartSession(cartSessionRepo.getById(request.getCartSessionId()))
-                .product(productRepo.getById(request.getProductId()))
+                .cartSession(cartSessionRepo.findById(request.getCartSessionId()).orElseThrow(() -> new RuntimeException("not found cart item")))
+                .product(productRepo.findById(request.getProductId()).orElseThrow(() -> new RuntimeException("not found cart item")))
                 .build();
         return cartItem;
     }
@@ -35,5 +38,29 @@ public class CartItemMapper {
                 .productId(cartItem.getProduct().getId())
                 .build();
         return cartItemResponse;
+    }
+
+    public CartItemResponse toUpdate(CartItem entity, CartItemRequest request) {
+        if (entity == null) throw new RuntimeException("Entity CartItem is null");
+
+        // Update the entity with request values
+        entity.setAmount(request.getAmount());
+        entity.setTotal(request.getTotal());
+        entity.setProduct(productRepo.findById(request.getProductId()).orElseThrow(() -> new RuntimeException("not found cart item")));
+        entity.setCartSession(cartSessionRepo.findById(request.getCartSessionId()).orElseThrow(() -> new RuntimeException("not found cart session")));
+
+        // Save entity
+        cartItemRepo.save(entity);
+
+        // Now use the updated entity to build the response
+        CartItemResponse cartItemResponseUpdate = CartItemResponse.builder()
+                .id(entity.getId())
+                .amount(request.getAmount())
+                .total(request.getTotal())
+                .cartSessionId(entity.getCartSession().getId())
+                .productId(entity.getProduct().getId())
+                .build();
+
+        return cartItemResponseUpdate;
     }
 }
