@@ -8,5 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class AuthorResponse {
+    private Long id;
     private String name;
 }

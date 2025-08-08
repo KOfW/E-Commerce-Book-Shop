@@ -30,11 +30,26 @@ public class ProductController {
             Page<ProductResponse> response = productService.getAll(page, size);
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse<Page<ProductResponse>>(
-                            "OK", "DISPLAY ALL PRODUCT SUCCESSFULLY", response));
+                            "200", "DISPLAY ALL PRODUCT SUCCESSFULLY", response));
         } catch (Exception e) {
             log.error("Error display all products", e);
             return ResponseEntity.internalServerError()
                     .body(new ApiResponse<>( // Trong nhánh catch không cần ép rõ vì null → T có thể là gì cũng được
+                            "ERROR", "Failed to display all products: " + e.getMessage(), null));
+        }
+    }
+
+    @GetMapping("/id/{id}")
+    public ResponseEntity<ApiResponse<ProductResponse>> getProductById(@PathVariable Long id){
+        try {
+            ProductResponse response = productService.getById(id);
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ApiResponse<ProductResponse>(
+                            "OK", "DISPLAY ALL PRODUCT SUCCESSFULLY", response));
+        } catch (Exception e) {
+            log.error("Error display all products", e);
+            return ResponseEntity.internalServerError()
+                    .body(new ApiResponse<ProductResponse>( // Trong nhánh catch không cần ép rõ vì null → T có thể là gì cũng được
                             "ERROR", "Failed to display all products: " + e.getMessage(), null));
         }
     }
@@ -46,15 +61,15 @@ public class ProductController {
         try {
             ProductResponse response = productService.create(request);
             return ResponseEntity.ok(
-                    new ApiResponse<ProductResponse>("SUCCESS", "Product created successfully", response));
+                    new ApiResponse<ProductResponse>("200", "Product created successfully", response));
 
         } catch (ValidationException e) {
             return ResponseEntity.badRequest().body(
-                    new ApiResponse<ProductResponse>("VALIDATION_ERROR", e.getMessage(), null));
+                    new ApiResponse<ProductResponse>("400", e.getMessage(), null));
 
         } catch (DuplicateProductException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(
-                    new ApiResponse<ProductResponse>("CONFLICT", e.getMessage(), null));
+                    new ApiResponse<ProductResponse>("409", e.getMessage(), null));
 
         } catch (Exception e) {
             log.error("Error creating product", e);
@@ -90,5 +105,7 @@ public class ProductController {
             return ResponseEntity.internalServerError().body(new ApiResponse<ProductResponse>("ERROR","FALED TO CREATE PRODUCT"+e.getMessage(),null));
         }
     }
+
+
 }
 

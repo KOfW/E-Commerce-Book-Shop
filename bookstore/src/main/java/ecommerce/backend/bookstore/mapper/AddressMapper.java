@@ -3,6 +3,7 @@ package ecommerce.backend.bookstore.mapper;
 import ecommerce.backend.bookstore.dto.request.AddressRequest;
 import ecommerce.backend.bookstore.dto.response.AddressResponse;
 import ecommerce.backend.bookstore.entity.Address;
+import ecommerce.backend.bookstore.repository.AddressRepo;
 import ecommerce.backend.bookstore.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,8 @@ public class AddressMapper {
 
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private AddressRepo addressRepo;
 
     public Address toEntity(AddressRequest request){
         if(request == null) throw new RuntimeException("Request Address is null");
@@ -46,6 +49,9 @@ public class AddressMapper {
         entity.setCity(request.getCity());
         entity.setProvince(request.getProvince());
         entity.setCountry(request.getCountry());
+
+        // Save entity
+        addressRepo.save(entity);
 
         // Now use the updated entity to build the response
         AddressResponse addressResponseUpdate = AddressResponse.builder()
