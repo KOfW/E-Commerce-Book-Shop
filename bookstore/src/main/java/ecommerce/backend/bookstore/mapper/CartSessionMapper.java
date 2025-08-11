@@ -33,22 +33,9 @@ public class CartSessionMapper {
         return response;
     }
 
-    public CartSessionResponse toUpdate(CartSession entity, CartSessionRequest request) {
-        if (entity == null) throw new RuntimeException("Entity CartSession is null");
-
+    public void toUpdate(CartSession entity, CartSessionRequest request) {
         // Update the entity with request values
         entity.setTotal(request.getTotal());
         entity.setUser(userRepo.findById(request.getUserId()).orElseThrow(() -> new RuntimeException("not found user")));
-
-        // Save entity
-        cartSessionRepo.save(entity);
-
-        // Now use the updated entity to build the response
-        CartSessionResponse cartSessionResponseUpdate = CartSessionResponse.builder()
-                .id(entity.getId())
-                .userId(entity.getUser().getId())
-                .build();
-
-        return cartSessionResponseUpdate;
     }
 }

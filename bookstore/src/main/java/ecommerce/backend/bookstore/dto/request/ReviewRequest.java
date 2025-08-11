@@ -18,7 +18,7 @@ import lombok.Setter;
 public class ReviewRequest {
     private Boolean isVerified;
     private String content;
-    private Review parent;
+    private Long parentId;
     private Long userId;
     private Long productId;
 }

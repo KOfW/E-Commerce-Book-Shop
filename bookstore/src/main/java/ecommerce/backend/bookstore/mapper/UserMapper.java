@@ -36,4 +36,14 @@ public class UserMapper {
 
         return response;
     }
+
+    public void toUpdate(User entity, UserRequest request) {
+        // Update the entity with request values
+        entity.setUsername(request.getUsername());
+        entity.setEmail(request.getEmail());
+        entity.setPhone(request.getPhone());
+        entity.setFirstName(request.getFirstName());
+        entity.setLastName(request.getLastName());
+        entity.setActive(request.getActive());
+    }
 }

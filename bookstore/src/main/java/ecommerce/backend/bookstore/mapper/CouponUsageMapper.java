@@ -5,6 +5,7 @@ import ecommerce.backend.bookstore.dto.response.CouponResponse;
 import ecommerce.backend.bookstore.dto.response.CouponUsageResponse;
 import ecommerce.backend.bookstore.entity.CouponUsage;
 import ecommerce.backend.bookstore.repository.CouponRepo;
+import ecommerce.backend.bookstore.repository.CouponUsageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,8 @@ public class CouponUsageMapper {
 
     @Autowired
     private CouponRepo couponRepo;
+    @Autowired
+    private CouponUsageRepo couponUsageRepo;
 
     public CouponUsage toEntity (CouponUsageRequest request){
         CouponUsage couponUsage = CouponUsage.builder()
@@ -30,5 +33,11 @@ public class CouponUsageMapper {
                 .build();
 
         return couponUsageResponse;
+    }
+
+    public void toUpdate(CouponUsage entity, CouponUsageRequest request) {
+        // Update the entity with request values
+        entity.setUsageAmount(request.getUsageAmount());
+        entity.setCoupon(couponRepo.findById(request.getCouponId()).orElseThrow(() -> new RuntimeException("not found coupon")));
     }
 }

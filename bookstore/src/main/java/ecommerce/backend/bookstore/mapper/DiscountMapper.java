@@ -3,10 +3,15 @@ package ecommerce.backend.bookstore.mapper;
 import ecommerce.backend.bookstore.dto.request.DiscountRequest;
 import ecommerce.backend.bookstore.dto.response.DiscountResponse;
 import ecommerce.backend.bookstore.entity.Discount;
+import ecommerce.backend.bookstore.repository.DiscountRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DiscountMapper {
+
+    @Autowired
+    private DiscountRepo discountRepo;
 
     public Discount toEntity(DiscountRequest request){
         Discount discount = Discount.builder()
@@ -27,5 +32,12 @@ public class DiscountMapper {
                 .build();
 
         return discountResponse;
+    }
+
+    public void toUpdate(Discount entity, DiscountRequest request) {
+        // Update the entity with request values
+        entity.setDiscountPercent(request.getDiscountPercent());
+        entity.setStartDate(request.getStartDate());
+        entity.setEndDate(request.getEndDate());
     }
 }

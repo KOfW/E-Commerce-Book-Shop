@@ -3,6 +3,7 @@ package ecommerce.backend.bookstore.mapper;
 import ecommerce.backend.bookstore.dto.request.RatingRequest;
 import ecommerce.backend.bookstore.dto.response.RatingResponse;
 import ecommerce.backend.bookstore.entity.Rating;
+import ecommerce.backend.bookstore.repository.RatingRepo;
 import ecommerce.backend.bookstore.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,8 @@ public class RatingMapper {
 
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private RatingRepo ratingRepo;
 
     public Rating toEntity (RatingRequest request){
         Rating rating = Rating.builder()
@@ -32,5 +35,14 @@ public class RatingMapper {
                 .isVerified(rating.getIsVerified())
                 .build();
         return ratingResponse;
+    }
+
+
+    public void toUpdate(Rating entity, RatingRequest request) {
+        // Update the entity with request values
+        entity.setParentId(request.getParentId());
+        entity.setRatingNumber(request.getRatingNumber());
+        entity.setIsVerified(request.getIsVerified());
+        entity.setUser(userRepo.findById(request.getUserId()).orElseThrow(() -> new RuntimeException("not found user")));
     }
 }

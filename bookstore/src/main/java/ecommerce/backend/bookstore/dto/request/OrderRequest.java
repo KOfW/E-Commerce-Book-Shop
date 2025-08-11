@@ -19,5 +19,5 @@ public class OrderRequest {
     private Date orderDate;
     private Long userId;
     private Long shippingAddressId;
-
+    private OrderStatus status;
 }

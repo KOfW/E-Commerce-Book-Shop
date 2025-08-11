@@ -40,27 +40,11 @@ public class CartItemMapper {
         return cartItemResponse;
     }
 
-    public CartItemResponse toUpdate(CartItem entity, CartItemRequest request) {
-        if (entity == null) throw new RuntimeException("Entity CartItem is null");
-
+    public void toUpdate(CartItem entity, CartItemRequest request) {
         // Update the entity with request values
         entity.setAmount(request.getAmount());
         entity.setTotal(request.getTotal());
         entity.setProduct(productRepo.findById(request.getProductId()).orElseThrow(() -> new RuntimeException("not found cart item")));
         entity.setCartSession(cartSessionRepo.findById(request.getCartSessionId()).orElseThrow(() -> new RuntimeException("not found cart session")));
-
-        // Save entity
-        cartItemRepo.save(entity);
-
-        // Now use the updated entity to build the response
-        CartItemResponse cartItemResponseUpdate = CartItemResponse.builder()
-                .id(entity.getId())
-                .amount(request.getAmount())
-                .total(request.getTotal())
-                .cartSessionId(entity.getCartSession().getId())
-                .productId(entity.getProduct().getId())
-                .build();
-
-        return cartItemResponseUpdate;
     }
 }

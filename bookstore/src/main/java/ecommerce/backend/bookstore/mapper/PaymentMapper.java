@@ -5,6 +5,7 @@ import ecommerce.backend.bookstore.dto.response.PaymentResponse;
 import ecommerce.backend.bookstore.entity.Payment;
 import ecommerce.backend.bookstore.repository.OrderRepo;
 import ecommerce.backend.bookstore.repository.PaymentMethodRepo;
+import ecommerce.backend.bookstore.repository.PaymentRepo;
 import ecommerce.backend.bookstore.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ public class PaymentMapper {
     private UserRepo userRepo;
     @Autowired
     private OrderRepo orderRepo;
+    @Autowired
+    private PaymentRepo paymentRepo;
 
     public Payment toEntity (PaymentRequest request){
         Payment payment = Payment.builder()
@@ -41,5 +44,15 @@ public class PaymentMapper {
                 .orderId(payment.getOrder().getId())
                 .build();
         return response;
+    }
+
+    public void toUpdate(Payment entity, PaymentRequest request) {
+        // Update the entity with request values
+        entity.setTotal(request.getTotal());
+        entity.setStatus(request.getStatus());
+        entity.setPaymentDate(request.getPaymentDate());
+        entity.setPaymentMethod(paymentMethodRepo.findById( request.getPaymentMethodId()).orElseThrow(() -> new RuntimeException("not found method payment")));
+        entity.setUser(userRepo.findById(request.getUserId()).orElseThrow(() -> new RuntimeException("not found user")));
+        entity.setOrder(orderRepo.findById(request.getOrderId()).orElseThrow(() -> new RuntimeException("not found order")));
     }
 }

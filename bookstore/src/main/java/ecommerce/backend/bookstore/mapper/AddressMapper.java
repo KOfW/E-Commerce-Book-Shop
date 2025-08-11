@@ -41,28 +41,11 @@ public class AddressMapper {
         return addressResponse;
     }
 
-    public AddressResponse toUpdate(Address entity, AddressRequest request) {
-        if (entity == null) throw new RuntimeException("Entity Address is null");
-
+    public void toUpdate(Address entity, AddressRequest request) {
         // Update the entity with request values
         entity.setStreet(request.getStreet());
         entity.setCity(request.getCity());
         entity.setProvince(request.getProvince());
         entity.setCountry(request.getCountry());
-
-        // Save entity
-        addressRepo.save(entity);
-
-        // Now use the updated entity to build the response
-        AddressResponse addressResponseUpdate = AddressResponse.builder()
-                .id(entity.getId())
-                .userId(entity.getUser().getId())
-                .street(entity.getStreet())
-                .city(entity.getCity())
-                .province(entity.getProvince())
-                .country(entity.getCountry())
-                .build();
-
-        return addressResponseUpdate;
     }
 }

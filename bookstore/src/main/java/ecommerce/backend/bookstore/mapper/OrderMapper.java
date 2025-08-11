@@ -4,6 +4,7 @@ import ecommerce.backend.bookstore.dto.request.OrderRequest;
 import ecommerce.backend.bookstore.dto.response.OrderResponse;
 import ecommerce.backend.bookstore.entity.Order;
 import ecommerce.backend.bookstore.repository.AddressRepo;
+import ecommerce.backend.bookstore.repository.OrderRepo;
 import ecommerce.backend.bookstore.repository.UserRepo;
 import ecommerce.backend.bookstore.utils.OrderStatus;
 import org.aspectj.weaver.ast.Or;
@@ -17,6 +18,8 @@ public class OrderMapper {
     private UserRepo userRepo;
     @Autowired
     private AddressRepo addressRepo;
+    @Autowired
+    private OrderRepo orderRepo;
 
     public Order toEntity (OrderRequest request){
         Order order = Order.builder()
@@ -41,5 +44,14 @@ public class OrderMapper {
                 .build();
 
         return orderResponse;
+    }
+
+    public void toUpdate(Order entity, OrderRequest request) {
+        // Update the entity with request values
+        entity.setTotal(request.getTotal());
+        entity.setStatus(request.getStatus());
+        entity.setOrderDate(request.getOrderDate());
+        entity.setUser(userRepo.findById(request.getUserId()).orElseThrow(() -> new RuntimeException("not found user")));
+        entity.setAddress(addressRepo.findById(request.getShippingAddressId()).orElseThrow(() -> new RuntimeException("not found address")));
     }
  }

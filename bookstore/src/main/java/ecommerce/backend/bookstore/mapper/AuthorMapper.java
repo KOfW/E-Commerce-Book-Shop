@@ -30,21 +30,8 @@ public class AuthorMapper {
         return authorResponse;
     }
 
-    public AuthorResponse toUpdate(Author entity, AuthorRequest request) {
-        if (entity == null) throw new RuntimeException("Entity author is null");
-
+    public void toUpdate(Author entity, AuthorRequest request) {
         // Update the entity with request values
         entity.setName(request.getName());
-
-        // Save entity
-        authorRepo.save(entity);
-
-        // Now use the updated entity to build the response
-        AuthorResponse authorResponseUpdate = AuthorResponse.builder()
-                .id(entity.getId())
-                .name(entity.getName())
-                .build();
-
-        return authorResponseUpdate;
     }
 }

@@ -16,7 +16,7 @@ public class CategoryMapper {
     public Category toEntity (CategoryRequest request){
         Category category = Category.builder()
                 .name(request.getName())
-                .parentId(request.getParentId())
+                .parent(categoryRepo.findById(request.getParentId()).orElseThrow(() -> new RuntimeException("not found category")))
                 .build();
         return category;
     }
@@ -25,28 +25,14 @@ public class CategoryMapper {
         CategoryResponse response = CategoryResponse.builder()
                 .id(category.getId())
                 .name(category.getName())
-                .parentId(category.getParentId())
+                .parentId(category.getParent().getId())
                 .build();
         return response;
     }
 
-    public CategoryResponse toUpdate(Category entity, CategoryRequest request) {
-        if (entity == null) throw new RuntimeException("Entity Category is null");
-
+    public void toUpdate(Category entity, CategoryRequest request) {
         // Update the entity with request values
         entity.setName(request.getName());
         entity.setParent(categoryRepo.findById(request.getParentId()).orElseThrow(() -> new RuntimeException("not found cate parent id")));
-
-        // Save entity
-        categoryRepo.save(entity);
-
-        // Now use the updated entity to build the response
-        CategoryResponse categoryResponseUpdate = CategoryResponse.builder()
-                .id(entity.getId())
-                .name(entity.getName())
-                .parentId(entity.getParent().getId())
-                .build();
-
-        return categoryResponseUpdate;
     }
 }

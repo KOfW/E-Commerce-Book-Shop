@@ -3,6 +3,7 @@ package ecommerce.backend.bookstore.mapper;
 import ecommerce.backend.bookstore.dto.request.OrderDetailRequest;
 import ecommerce.backend.bookstore.dto.response.OrderDetailResponse;
 import ecommerce.backend.bookstore.entity.OrderDetail;
+import ecommerce.backend.bookstore.repository.OrderDetailRepo;
 import ecommerce.backend.bookstore.repository.OrderRepo;
 import ecommerce.backend.bookstore.repository.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ public class OrderDetailMapper {
     private OrderRepo orderRepo;
     @Autowired
     private ProductRepo productRepo;
+    @Autowired
+    private OrderDetailRepo orderDetailRepo;
 
     public OrderDetail toEntity (OrderDetailRequest request){
         OrderDetail orderDetail = OrderDetail.builder()
@@ -37,5 +40,13 @@ public class OrderDetailMapper {
                 .build();
 
         return orderDetailResponse;
+    }
+
+    public void toUpdate(OrderDetail entity, OrderDetailRequest request) {
+        // Update the entity with request values
+        entity.setAmount(request.getAmount());
+        entity.setTotal(request.getTotal());
+        entity.setOrder(orderRepo.findById(request.getOrderId()).orElseThrow(() -> new RuntimeException("not found order")));
+        entity.setProduct(productRepo.findById(request.getProductId()).orElseThrow(() -> new RuntimeException("not found product")));
     }
 }

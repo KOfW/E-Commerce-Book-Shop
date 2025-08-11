@@ -16,17 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductMapper {
 
-    private CategoryRepo categoryRepo;
-    private DiscountRepo discountRepo;
-    private AuthorRepo authorRepo;
-    private ProductRepo productRepo;
-
-    public Product toEntity(ProductRequest request){
-
-        Author author = authorRepo.getById(request.getAuthorId());
-        Discount discount = discountRepo.getById(request.getDiscountId());
-        Category category = categoryRepo.getById(request.getCategoryId());
-
+    public Product toEntity(ProductRequest request, Author author, Discount discount, Category category) {
         return Product.builder()
                 .author(author)
                 .desc(request.getDesc())
@@ -41,7 +31,7 @@ public class ProductMapper {
                 .build();
     }
 
-    public ProductResponse toDTO(Product product){
+    public ProductResponse toDTO(Product product) {
         return ProductResponse.builder()
                 .price(product.getPrice())
                 .desc(product.getDesc())
@@ -49,34 +39,20 @@ public class ProductMapper {
                 .name(product.getName())
                 .quantity_sold(product.getQuantity_sold())
                 .publisher(product.getPublisher())
-                .author(product.getAuthor().getId())
-                .category(product.getCategory().getId())
-                .discount(product.getDiscount().getId())
+                .author(product.getAuthor() != null ? product.getAuthor().getId() : null)
+                .category(product.getCategory() != null ? product.getCategory().getId() : null)
+                .discount(product.getDiscount() != null ? product.getDiscount().getId() : null)
                 .build();
     }
 
-    public ProductResponse update(ProductRequest request, Product product) {
-        Author author = authorRepo.getById(request.getAuthorId());
-        Discount discount = discountRepo.getById(request.getDiscountId());
-        Category category = categoryRepo.getById(request.getCategoryId());
-
+    public void toUpdate(Product product, ProductRequest request, Author author, Discount discount, Category category) {
         product.setAuthor(author);
         product.setDesc(request.getDesc());
         product.setCategory(category);
         product.setDiscount(discount);
         product.setName(request.getName());
         product.setPrice(request.getPrice());
-        product.setStatus(ProductQuantityStatus.Available);
         product.setPublisher(request.getPublisher());
-        product.setHiddenProduct(request.getHiddenProduct()); // ép về true luôn
-
-        // Gọi lại quantity_sold nếu cần tính lại (chỉ khi product.getId() != null)
-        if (product.getId() != null) {
-            product.setQuantity_sold(productRepo.quantitySold(product.getId()));
-        }
-
-        productRepo.save(product);
-
-        return toDTO(product); // dùng lại method toDTO để map response
+        product.setHiddenProduct(request.getHiddenProduct());
     }
 }
