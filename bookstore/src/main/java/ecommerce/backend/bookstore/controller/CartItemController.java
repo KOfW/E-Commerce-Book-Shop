@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
-@RequestMapping("/api/CartItem")
+@RequestMapping("/api/cartItem")
 public class CartItemController {
 
     private final ICartItemService cartItemService;

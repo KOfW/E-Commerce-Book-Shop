@@ -34,7 +34,7 @@ public class CouponServiceImpl implements ICouponService {
 
     @Override
     public CouponResponse create(CouponRequest request) {
-        return couponMapper.toDTO(couponMapper.toEntity(request));
+        return couponMapper.toDTO(couponRepo.save(couponMapper.toEntity(request)));
     }
 
     @Override

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
-@RequestMapping("/api/Category")
+@RequestMapping("/api/category")
 public class CategoryController {
 
     private final ICategoryService categoryService;

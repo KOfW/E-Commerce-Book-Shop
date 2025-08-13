@@ -29,6 +29,7 @@ public class CartItemServiceImpl implements ICartItemService {
     @Override
     public CartItemResponse getEntityById(Long id) {
         CartItem cartItem = cartItemRepo.findById(id).orElseThrow(() -> new RuntimeException("not found cartItem"));
+        cartItemRepo.save(cartItem);
         return cartItemMapper.toDTO(cartItem);
     }
 

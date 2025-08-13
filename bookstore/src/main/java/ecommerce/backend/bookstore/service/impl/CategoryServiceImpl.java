@@ -34,7 +34,7 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     public CategoryResponse create(CategoryRequest request) {
-        return categoryMapper.toDTO(categoryMapper.toEntity(request));
+        return categoryMapper.toDTO(categoryRepo.save(categoryMapper.toEntity(request)));
     }
 
     @Override

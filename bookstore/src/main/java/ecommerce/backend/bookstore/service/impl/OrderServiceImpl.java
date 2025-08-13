@@ -34,7 +34,7 @@ public class OrderServiceImpl implements IOrderSerivce {
 
     @Override
     public OrderResponse create(OrderRequest request) {
-        return orderMapper.toDTO(orderMapper.toEntity(request));
+        return orderMapper.toDTO(orderRepo.save(orderMapper.toEntity(request)));
     }
 
     @Override

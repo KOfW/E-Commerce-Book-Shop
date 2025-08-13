@@ -34,7 +34,7 @@ public class RatingServiceImpl implements IRatingService {
 
     @Override
     public RatingResponse create(RatingRequest request) {
-        return ratingMapper.toDTO(ratingMapper.toEntity(request));
+        return ratingMapper.toDTO(ratingRepo.save(ratingMapper.toEntity(request)));
     }
 
     @Override

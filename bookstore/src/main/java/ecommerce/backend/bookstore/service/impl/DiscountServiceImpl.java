@@ -34,7 +34,7 @@ public class DiscountServiceImpl implements IDiscountService {
 
     @Override
     public DiscountResponse create(DiscountRequest request) {
-        return discountMapper.toDTO(discountMapper.toEntity(request));
+        return discountMapper.toDTO(discountRepo.save(discountMapper.toEntity(request)));
     }
 
     @Override

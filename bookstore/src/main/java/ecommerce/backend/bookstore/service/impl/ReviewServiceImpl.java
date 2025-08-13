@@ -34,7 +34,7 @@ public class ReviewServiceImpl implements IReviewService {
 
     @Override
     public ReviewResponse create(ReviewRequest request) {
-        return reviewMapper.toDTO(reviewMapper.toEntity(request));
+        return reviewMapper.toDTO(reviewRepo.save(reviewMapper.toEntity(request)));
     }
 
     @Override

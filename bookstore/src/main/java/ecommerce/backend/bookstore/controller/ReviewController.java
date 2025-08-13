@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
-@RequestMapping("/api/Review")
+@RequestMapping("/api/review")
 public class ReviewController {
 
     private final IReviewService reviewService;

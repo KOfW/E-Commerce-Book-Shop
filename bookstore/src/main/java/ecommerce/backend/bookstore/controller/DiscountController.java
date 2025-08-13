@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
-@RequestMapping("/api/Discount")
+@RequestMapping("/api/discount")
 public class DiscountController {
 
     private final IDiscountService discountService;

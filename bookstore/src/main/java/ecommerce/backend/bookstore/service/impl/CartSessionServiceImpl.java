@@ -34,7 +34,7 @@ public class CartSessionServiceImpl implements ICartSessionService {
 
     @Override
     public CartSessionResponse create(CartSessionRequest request) {
-        return cartSessionMapper.toDTO(cartSessionMapper.toEntity(request));
+        return cartSessionMapper.toDTO(cartSessionRepo.save(cartSessionMapper.toEntity(request)));
     }
 
     @Override

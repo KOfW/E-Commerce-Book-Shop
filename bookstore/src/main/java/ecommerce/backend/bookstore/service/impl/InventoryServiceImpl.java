@@ -34,7 +34,7 @@ public class InventoryServiceImpl implements IInventoryService {
 
     @Override
     public InventoryResponse create(InventoryRequest request) {
-        return inventoryMapper.toDTO(inventoryMapper.toEntity(request));
+        return inventoryMapper.toDTO(inventoryRepo.save(inventoryMapper.toEntity(request)));
     }
 
     @Override

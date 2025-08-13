@@ -34,7 +34,7 @@ public class PaymentServiceImpl implements IPaymentService {
 
     @Override
     public PaymentResponse create(PaymentRequest request) {
-        return paymentMapper.toDTO(paymentMapper.toEntity(request));
+        return paymentMapper.toDTO(paymentRepo.save(paymentMapper.toEntity(request)));
     }
 
     @Override

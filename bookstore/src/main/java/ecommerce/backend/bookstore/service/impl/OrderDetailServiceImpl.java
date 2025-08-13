@@ -34,7 +34,7 @@ public class OrderDetailServiceImpl implements IOrderDetailService {
 
     @Override
     public OrderDetailResponse create(OrderDetailRequest request) {
-        return orderDetailMapper.toDTO(orderDetailMapper.toEntity(request));
+        return orderDetailMapper.toDTO(orderDetailRepo.save(orderDetailMapper.toEntity(request)));
     }
 
     @Override
