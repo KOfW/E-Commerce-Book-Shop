@@ -46,7 +46,8 @@ public class AuthorServiceImpl implements IAuthorService {
 
     @Override
     public AuthorResponse update(Long id, AuthorRequest request) {
-        Author author = authorRepo.findById(id).orElseThrow(() -> new RuntimeException("not found Author"));
-        return authorMapper.toUpdate(author, request);
+        Author authorEntity = authorRepo.findById(id).orElseThrow(() -> new RuntimeException("not found Author"));
+        authorMapper.toUpdate(authorEntity, request);
+        return authorMapper.toDTO(authorRepo.save(authorEntity));
     }
 }

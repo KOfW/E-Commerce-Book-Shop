@@ -23,7 +23,7 @@ public class AddressMapper {
                 .city(request.getCity())
                 .province(request.getProvince())
                 .country(request.getCountry())
-                .user(userRepo.getReferenceById(request.getUserId()))
+                .user(userRepo.findById(request.getUserId()).orElseThrow(() -> new RuntimeException("not found user")))
                 .build();
         return address;
     }

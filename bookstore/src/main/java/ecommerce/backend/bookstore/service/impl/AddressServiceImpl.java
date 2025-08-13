@@ -49,7 +49,8 @@ public class AddressServiceImpl implements IAddressService {
 
     @Override
     public AddressResponse update(Long id, AddressRequest request) {
-        Address address = addressRepo.findById(id).orElseThrow(() -> new RuntimeException("not found address"));
-        return addressMapper.toUpdate(address, request);
+        Address addressEntity = addressRepo.findById(id).orElseThrow(() -> new RuntimeException("not found address"));
+        addressMapper.toUpdate(addressEntity, request);
+        return addressMapper.toDTO(addressRepo.save(addressEntity));
     }
 }

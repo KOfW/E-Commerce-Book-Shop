@@ -1,7 +1,6 @@
 package ecommerce.backend.bookstore.mapper;
 
 import ecommerce.backend.bookstore.dto.request.CouponUsageRequest;
-import ecommerce.backend.bookstore.dto.response.CouponResponse;
 import ecommerce.backend.bookstore.dto.response.CouponUsageResponse;
 import ecommerce.backend.bookstore.entity.CouponUsage;
 import ecommerce.backend.bookstore.repository.CouponRepo;
@@ -26,10 +25,10 @@ public class CouponUsageMapper {
         return couponUsage;
     }
 
-    public CouponUsageResponse toDTO (CouponUsageRequest request){
+    public CouponUsageResponse toDTO (CouponUsage entity){
         CouponUsageResponse couponUsageResponse = CouponUsageResponse.builder()
-                .usageAmount(request.getUsageAmount())
-                .couponId(request.getCouponId())
+                .usageAmount(entity.getUsageAmount())
+                .couponId(entity.getCoupon().getId())
                 .build();
 
         return couponUsageResponse;

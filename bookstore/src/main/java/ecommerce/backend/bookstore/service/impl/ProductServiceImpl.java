@@ -37,9 +37,10 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public ProductResponse update(ProductRequest request ,Long id) {
-        Product product = productRepo.getProductsById(id);
-        return productMapper.update(request,product);
+    public ProductResponse update(ProductRequest request, Long id) {
+        Product productEntity = productRepo.findById(id).orElseThrow(() -> new RuntimeException("not found Product"));
+        productMapper.toUpdate(request, productEntity);
+        return productMapper.toDTO(productRepo.save(productEntity));
     }
 
     @Override
