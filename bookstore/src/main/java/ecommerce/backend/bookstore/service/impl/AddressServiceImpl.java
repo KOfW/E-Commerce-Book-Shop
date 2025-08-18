@@ -37,7 +37,7 @@ public class AddressServiceImpl implements IAddressService {
 
     @Override
     public AddressResponse create(AddressRequest request) {
-        return addressMapper.toDTO(addressMapper.toEntity(request));
+        return addressMapper.toDTO(addressRepo.save(addressMapper.toEntity(request)));
     }
 
     @Override

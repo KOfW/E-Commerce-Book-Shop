@@ -35,7 +35,7 @@ public class CartItemServiceImpl implements ICartItemService {
 
     @Override
     public CartItemResponse create(CartItemRequest request) {
-        return cartItemMapper.toDTO(cartItemMapper.toEntity(request));
+        return cartItemMapper.toDTO(cartItemRepo.save(cartItemMapper.toEntity(request)));
     }
 
     @Override

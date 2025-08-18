@@ -34,7 +34,7 @@ public class AuthorServiceImpl implements IAuthorService {
 
     @Override
     public AuthorResponse create(AuthorRequest request) {
-        return authorMapper.toDTO(authorMapper.toEntity(request));
+        return authorMapper.toDTO(authorRepo.save(authorMapper.toEntity(request)));
     }
 
     @Override
