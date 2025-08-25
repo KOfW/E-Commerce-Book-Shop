@@ -67,27 +67,10 @@ public class AddressController {
 
     // Create address
     @PostMapping
-    public ResponseEntity<ApiResponse<AddressResponse>> createAddress(
+    public ResponseEntity<AddressResponse> createAddress(
             @RequestBody @Valid AddressRequest request) {
-        try {
-            AddressResponse response = addressService.create(request);
-            return ResponseEntity.status(HttpStatus.CREATED).body(
-                    new ApiResponse<>("201", "Address created successfully", response)
-            );
-        } catch (ValidationException e) {
-            return ResponseEntity.badRequest().body(
-                    new ApiResponse<>("400", e.getMessage(), null)
-            );
-        } catch (DuplicateProductException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(
-                    new ApiResponse<>("409", e.getMessage(), null)
-            );
-        } catch (Exception e) {
-            log.error("Error creating address", e);
-            return ResponseEntity.internalServerError().body(
-                    new ApiResponse<>("500", "Failed to create address", null)
-            );
-        }
+        AddressResponse response = addressService.create(request);
+        return ResponseEntity.ok(response);
     }
 
     // Update address
