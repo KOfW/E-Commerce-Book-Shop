@@ -1,16 +1,15 @@
 package ecommerce.backend.bookstore.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "coupon_usage")
+@Builder
 public class CouponUsage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

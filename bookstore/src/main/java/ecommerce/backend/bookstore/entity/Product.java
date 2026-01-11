@@ -2,10 +2,7 @@ package ecommerce.backend.bookstore.entity;
 
 import ecommerce.backend.bookstore.utils.ProductQuantityStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,17 +12,24 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "product")
-public class Product extends Base{
+public class Product extends Base {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
+    @Column(name = "description")
     private String desc;
+
     private Double price;
     private Integer quantity_sold;
+
     @Enumerated(EnumType.STRING)
     private ProductQuantityStatus status;
+
     private String publisher;
     private Boolean hiddenProduct;
 
@@ -44,20 +48,15 @@ public class Product extends Base{
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductImage> productImages = new ArrayList<>();
 
-    @OneToOne(mappedBy = "product")
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private Inventory inventory;
 
-    @OneToOne(mappedBy = "product")
-    private CartItem cartItem;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartItem> cartItems = new ArrayList<>();
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-    private List<Review> reviews;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews = new ArrayList<>();
 
-    public void setInventory(Inventory inventory) {
-        this.inventory = inventory;
-        if (inventory != null) {
-            inventory.setProduct(this);
-        }
-    }
-
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderDetail> orderDetails = new ArrayList<>();
 }

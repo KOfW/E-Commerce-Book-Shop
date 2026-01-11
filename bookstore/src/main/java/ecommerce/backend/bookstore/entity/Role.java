@@ -1,5 +1,6 @@
 package ecommerce.backend.bookstore.entity;
 
+import ecommerce.backend.bookstore.utils.RoleEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,6 +20,8 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Enumerated(EnumType.STRING)
+    private RoleEnum roleEnum;
 
     @ManyToMany(mappedBy = "role")
     private Set<User> users = new HashSet<>();

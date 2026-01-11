@@ -1,10 +1,7 @@
 package ecommerce.backend.bookstore.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -16,6 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name = "coupon")
+@Builder
 public class Coupon extends Base{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +24,7 @@ public class Coupon extends Base{
     private Date startDate;
     private Date endDate;
 
-    @ManyToMany(mappedBy = "coupon")
+    @ManyToMany(mappedBy = "coupons")
     private Set<User> users = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)

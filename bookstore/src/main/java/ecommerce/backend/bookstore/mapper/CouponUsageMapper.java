@@ -1,0 +1,42 @@
+package ecommerce.backend.bookstore.mapper;
+
+import ecommerce.backend.bookstore.dto.request.CouponUsageRequest;
+import ecommerce.backend.bookstore.dto.response.CouponUsageResponse;
+import ecommerce.backend.bookstore.entity.CouponUsage;
+import ecommerce.backend.bookstore.repository.CouponRepo;
+import ecommerce.backend.bookstore.repository.CouponUsageRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class CouponUsageMapper {
+
+    @Autowired
+    private CouponRepo couponRepo;
+    @Autowired
+    private CouponUsageRepo couponUsageRepo;
+
+    public CouponUsage toEntity (CouponUsageRequest request){
+        CouponUsage couponUsage = CouponUsage.builder()
+                .usageAmount(request.getUsageAmount())
+                .coupon(couponRepo.getById(request.getCouponId()))
+                .build();
+
+        return couponUsage;
+    }
+
+    public CouponUsageResponse toDTO (CouponUsage entity){
+        CouponUsageResponse couponUsageResponse = CouponUsageResponse.builder()
+                .usageAmount(entity.getUsageAmount())
+                .couponId(entity.getCoupon().getId())
+                .build();
+
+        return couponUsageResponse;
+    }
+
+    public void toUpdate(CouponUsage entity, CouponUsageRequest request) {
+        // Update the entity with request values
+        entity.setUsageAmount(request.getUsageAmount());
+        entity.setCoupon(couponRepo.findById(request.getCouponId()).orElseThrow(() -> new RuntimeException("not found coupon")));
+    }
+}
